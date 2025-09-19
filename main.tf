@@ -36,7 +36,7 @@ resource "google_compute_forwarding_rule" "redis_psc_forwarding_rule" {
 resource "google_dns_response_policy_rule" "redis_psc_dns_rule" {
   project         = var.gcp_project_id
   response_policy = var.dns_response_policy_name
-  rule_name       = "${google_compute_forwarding_rule.redis_psc_forwarding_rule.name}${var.dns_rule_suffix}"
+  rule_name       = "${google_compute_forwarding_rule.redis_psc_forwarding_rule.name}-rule"
   dns_name        = "psc.${var.redis_service_id}.gcp.cloud.rlrcp.com."
 
   local_data {
