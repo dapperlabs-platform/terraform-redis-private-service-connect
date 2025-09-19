@@ -1,13 +1,17 @@
 # Private Service Connect configuration
 
+resource "rediscloud_private_service_connect" "service" {
+  subscription_id = var.subscription_id
+}
+
 # Redis Cloud PSC endpoint
 resource "rediscloud_private_service_connect_endpoint" "redis_psc_endpoint" {
   subscription_id                    = var.subscription_id
   gcp_project_id                     = var.gcp_project_id
   gcp_vpc_name                       = var.gcp_vpc_name
   gcp_vpc_subnet_name                = var.gcp_vpc_subnet_name
-  endpoint_connection_name           = var.endpoint_connection_name
-  private_service_connect_service_id = var.redis_service_id
+  endpoint_connection_name           = "redis-${var.subscription_id}"
+  private_service_connect_service_id = rediscloud_private_service_connect.service.private_service_connect_service_id
 }
 
 # Reserve static IP for PSC endpoint
