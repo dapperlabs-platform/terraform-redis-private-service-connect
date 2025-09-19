@@ -26,12 +26,12 @@ resource "google_compute_address" "redis_psc_static_ip" {
 
 # Google Cloud forwarding rule
 resource "google_compute_forwarding_rule" "redis_psc_forwarding_rule" {
-  name                  = var.forwarding_rule_name
-  project               = var.gcp_project_id
-  region                = var.region
-  target                = rediscloud_private_service_connect_endpoint.redis_psc_endpoint.service_attachments[0].name
-  network               = "projects/${var.gcp_project_id}/global/networks/${var.gcp_vpc_name}"
-  subnetwork            = "projects/${var.gcp_project_id}/regions/${var.region}/subnetworks/${var.gcp_vpc_subnet_name}"
+  name    = var.forwarding_rule_name
+  project = var.gcp_project_id
+  region  = var.region
+  target  = rediscloud_private_service_connect_endpoint.redis_psc_endpoint.service_attachments[0].name
+  network = "projects/${var.gcp_project_id}/global/networks/${var.gcp_vpc_name}"
+  #subnetwork            = "projects/${var.gcp_project_id}/regions/${var.region}/subnetworks/${var.gcp_vpc_subnet_name}"
   ip_address            = google_compute_address.redis_psc_static_ip.address
   load_balancing_scheme = ""
 }
