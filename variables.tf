@@ -53,12 +53,6 @@ variable "dns_response_policy_name" {
   type        = string
 }
 
-variable "dns_rule_suffix" {
-  description = "Suffix to append to the forwarding rule name for the DNS rule"
-  type        = string
-  default     = "-rule"
-}
-
 variable "dns_ttl" {
   description = "TTL for the DNS record"
   type        = number

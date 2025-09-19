@@ -38,7 +38,3 @@ output "redis_psc_connection_host_name" {
   value       = data.rediscloud_private_service_connect.redis_psc_data.connection_host_name
 }
 
-output "redis_psc_connection_endpoint" {
-  description = "Redis Cloud PSC connection endpoint"
-  value       = data.rediscloud_private_service_connect.redis_psc_data.connection_endpoint
-}
