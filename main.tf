@@ -37,11 +37,11 @@ resource "google_dns_response_policy_rule" "redis_psc_dns_rule" {
   project         = var.gcp_project_id
   response_policy = var.dns_response_policy_name
   rule_name       = "${google_compute_forwarding_rule.redis_psc_forwarding_rule.name}-rule"
-  dns_name        = "psc.${var.subscription_id}.gcp.cloud.rlrcp.com."
+  dns_name        = "psc.${var.redis_service_id}.gcp.cloud.rlrcp.com."
 
   local_data {
     local_datas {
-      name    = "psc.${var.subscription_id}.gcp.cloud.rlrcp.com."
+      name    = "psc.${var.redis_service_id}.gcp.cloud.rlrcp.com."
       type    = "A"
       ttl     = var.dns_ttl
       rrdatas = [google_compute_address.redis_psc_static_ip.address]
