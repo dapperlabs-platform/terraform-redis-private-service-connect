@@ -52,7 +52,3 @@ resource "google_dns_response_policy_rule" "redis_psc_dns_rule" {
     }
   }
 }
-
-data "rediscloud_private_service_connect" "redis_psc_data" {
-  subscription_id = var.subscription_id
-}
