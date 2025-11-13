@@ -30,11 +30,11 @@ output "forwarding_rule_name" {
 
 output "dns_rule_id" {
   description = "ID of the DNS response policy rule"
-  value       = google_dns_response_policy_rule.redis_psc_dns_rule.id
+  value       = google_dns_response_policy_rule.redis_psc_dns_rule[0].id
 }
 
 output "redis_psc_connection_host_name" {
   description = "Redis Cloud PSC connection hostname"
-  value       = data.rediscloud_private_service_connect.redis_psc_data.connection_host_name
+  value       = rediscloud_private_service_connect_endpoint.redis_psc_endpoint.service_attachments[0].dns_record
 }
 

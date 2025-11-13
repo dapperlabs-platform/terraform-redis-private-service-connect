@@ -1,4 +1,7 @@
 # Private Service Connect configuration
+locals {
+  service_attachment_count = 1 # Each rediscloud_private_service_connect_endpoint will have exactly 1 service attachment
+}
 
 resource "rediscloud_private_service_connect" "service" {
   subscription_id = var.subscription_id
@@ -38,21 +41,19 @@ resource "google_compute_forwarding_rule" "redis_psc_forwarding_rule" {
 
 # DNS Response Policy Rule to map Redis PSC hostname to static IP
 resource "google_dns_response_policy_rule" "redis_psc_dns_rule" {
+  count = local.service_attachment_count
+
   project         = var.gcp_project_id
   response_policy = var.dns_response_policy_name
   rule_name       = "${google_compute_forwarding_rule.redis_psc_forwarding_rule.name}-rule"
-  dns_name        = "${data.rediscloud_private_service_connect.redis_psc_data.connection_host_name}."
+  dns_name        = rediscloud_private_service_connect_endpoint.redis_psc_endpoint.service_attachments[count.index].dns_record
 
   local_data {
     local_datas {
-      name    = "${data.rediscloud_private_service_connect.redis_psc_data.connection_host_name}."
+      name    = rediscloud_private_service_connect_endpoint.redis_psc_endpoint.service_attachments[count.index].dns_record
       type    = "A"
       ttl     = var.dns_ttl
       rrdatas = [google_compute_address.redis_psc_static_ip.address]
     }
   }
-}
-
-data "rediscloud_private_service_connect" "redis_psc_data" {
-  subscription_id = var.subscription_id
 }
